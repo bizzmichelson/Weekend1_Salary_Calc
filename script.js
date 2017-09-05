@@ -1,4 +1,6 @@
 var employeeInfo = [];
+var yearlyCosts = 0;
+var monthlyTotals = 0;
 
 //store the information
 // ** WHy do the fields get cleared?
@@ -11,10 +13,11 @@ function onReady() {
 
     $('#submitButton').on('click', addItem);
     $('#submitButton').on('click', AppendDOM);
+    $('#submitButton').on('click', addCosts);
     //a'Submit' button should collect the form information,
     // $('#submit').on('click', AppendInfo);
     // $('#submit').on('click', ClearInput);
-    // $('#submit').on('click', AppendDOM)
+    
 
 }
 
@@ -38,25 +41,23 @@ function Item (firstName, lastName, idNumber, jobTitle, annualSalary) {
 //Create an application that records employee salaries and adds salaries up to report monthly costs. 
 
 function AppendDOM() {
-    var $employeeArticle = $('<article>').data('employeeInfo');
+    //var $employeeArticle = $('<article>').data('employeeInfo');
 
-    $('main').append($employeeArticle);
+    $('#employee-display').append(
+        '<p>' + $('#firstNameIn').val() + ' ' + $('#lastNameIn').val() + '</p>'
+    );
+
+    console.log('append');
 }
 
-function Costs (employeeInfo) {
+function addCosts (employeeInfo) {
+    console.log('addCosts');
 
-var monthlyCosts = 0;
+    yearlyCosts += Number(employeeInfo.annualSalary);
 
-    for(var i = 0; i < employeeInfo.length; i++){
+    monthlyTotals = Math.round(yearlyCosts / 12);
 
-    monthlyCosts += Number(employeeInfo.annualSalary / 12);
-
-var objectToReturn = {
-    monthlyCosts : monthlyCosts
-};
-
-return objectToReturn;
-}
+    $('.total').html(monthlyTotals);
 }
 
 // A 'Submit' button should collect the form information, store the information to calculate monthly costs, append information to the DOM and clear the input fields. Using the stored information, calculate monthly costs and append this to the to DOM.
